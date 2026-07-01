@@ -53,15 +53,15 @@
     <div class="panel">
       <h2>Phrase Lists</h2>
       <div class="form-row">
-        <label for="new-list-name">Create a new list</label>
-        <input type="text" id="new-list-name" placeholder="e.g. Movie Quotes">
-        <button id="create-list-btn" style="margin-top:0.6em;">Create List</button>
+        <label for="list-file-name">List name</label>
+        <input type="text" id="list-file-name" placeholder="e.g. Movie Quotes (defaults to the file name)">
       </div>
 
       <div class="form-row">
-        <label for="bulk-phrases">Add phrases to the list selected above (one per line)</label>
-        <textarea id="bulk-phrases" rows="4" placeholder="A stitch in time saves nine&#10;Curiosity killed the cat"></textarea>
-        <button id="add-phrases-btn" style="margin-top:0.6em;">Add Phrases</button>
+        <label for="list-file-input">Upload a .txt file (one phrase per line)</label>
+        <input type="file" id="list-file-input" accept=".txt,text/plain">
+        <button id="upload-list-btn" style="margin-top:0.6em;">Upload List</button>
+        <div class="error-text" id="upload-error"></div>
       </div>
 
       <div class="form-row">

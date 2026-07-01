@@ -14,10 +14,10 @@ const liveSubmission = document.getElementById('live-submission');
 const markCorrectBtn = document.getElementById('mark-correct-btn');
 const nextRoundBtn = document.getElementById('next-round-btn');
 
-const newListNameInput = document.getElementById('new-list-name');
-const createListBtn = document.getElementById('create-list-btn');
-const bulkPhrasesInput = document.getElementById('bulk-phrases');
-const addPhrasesBtn = document.getElementById('add-phrases-btn');
+const listFileNameInput = document.getElementById('list-file-name');
+const listFileInput = document.getElementById('list-file-input');
+const uploadListBtn = document.getElementById('upload-list-btn');
+const uploadError = document.getElementById('upload-error');
 const phrasesContainer = document.getElementById('phrases-container');
 
 function setPhraseModeUI(randomizeEnabled) {
@@ -153,36 +153,46 @@ resetUsedBtn.addEventListener('click', async () => {
   loadPhrases();
 });
 
-createListBtn.addEventListener('click', async () => {
-  const name = newListNameInput.value.trim();
-  if (!name) return;
-  const { data, error } = await supabase
+uploadListBtn.addEventListener('click', async () => {
+  uploadError.textContent = '';
+
+  const file = listFileInput.files[0];
+  if (!file) {
+    uploadError.textContent = 'Choose a .txt file first.';
+    return;
+  }
+
+  const text = await file.text();
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  if (!lines.length) {
+    uploadError.textContent = 'That file has no lines in it.';
+    return;
+  }
+
+  const name = listFileNameInput.value.trim() || file.name.replace(/\.txt$/i, '');
+
+  const { data: list, error: listError } = await supabase
     .from('phrase_lists')
     .insert({ name })
     .select()
     .single();
-  if (error) return;
-  newListNameInput.value = '';
-  await loadLists();
-  listSelect.value = data.id;
-  loadPhrases();
-});
-
-addPhrasesBtn.addEventListener('click', async () => {
-  const listId = listSelect.value;
-  if (!listId) {
-    alert('Create or select a phrase list first.');
+  if (listError) {
+    uploadError.textContent = 'Failed to create list: ' + listError.message;
     return;
   }
-  const lines = bulkPhrasesInput.value
-    .split('\n')
-    .map((l) => l.trim())
-    .filter(Boolean);
-  if (!lines.length) return;
-  await supabase
+
+  const { error: phraseError } = await supabase
     .from('phrases')
-    .insert(lines.map((text) => ({ list_id: listId, text })));
-  bulkPhrasesInput.value = '';
+    .insert(lines.map((phraseText) => ({ list_id: list.id, text: phraseText })));
+  if (phraseError) {
+    uploadError.textContent = 'Failed to add phrases: ' + phraseError.message;
+    return;
+  }
+
+  listFileNameInput.value = '';
+  listFileInput.value = '';
+  await loadLists();
+  listSelect.value = list.id;
   loadPhrases();
 });
 
