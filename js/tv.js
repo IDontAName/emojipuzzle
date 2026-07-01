@@ -1,15 +1,39 @@
 import { supabase } from './supabaseClient.js';
 
+const stage = document.getElementById('tv-stage');
 const emojiDisplay = document.getElementById('emoji-display');
 const correctBanner = document.getElementById('correct-banner');
 
+function fitEmojiText() {
+  if (!emojiDisplay.textContent) return;
+
+  let lo = 8;
+  let hi = 500;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    emojiDisplay.style.fontSize = mid + 'px';
+    const fits =
+      emojiDisplay.scrollWidth <= stage.clientWidth &&
+      emojiDisplay.scrollHeight <= stage.clientHeight;
+    if (fits) {
+      lo = mid;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  emojiDisplay.style.fontSize = lo + 'px';
+}
+
 function applySubmission(row) {
   emojiDisplay.textContent = row.emoji || '';
+  fitEmojiText();
 }
 
 function applyGameState(state) {
   correctBanner.hidden = state.status !== 'correct';
 }
+
+window.addEventListener('resize', fitEmojiText);
 
 supabase
   .channel('tv_submission')

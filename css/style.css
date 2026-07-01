@@ -198,11 +198,10 @@ body.player-body {
 .status-line {
   text-align: center;
   color: var(--muted);
-  margin-bottom: 1.5em;
+  margin-top: 1em;
 }
 
 .emoji-form {
-  margin-top: auto;
   display: flex;
   gap: 0.6em;
 }
@@ -222,19 +221,27 @@ body.player-body {
 
 /* TV page */
 body.tv-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
   overflow: hidden;
 }
 
+.tv-stage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vw;
+  overflow: hidden;
+}
+
 .tv-emoji {
-  font-size: min(18vw, 14rem);
+  font-size: 10rem;
   text-align: center;
-  line-height: 1.1;
-  padding: 0 0.3em;
+  line-height: 1.15;
   word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .correct-banner {
