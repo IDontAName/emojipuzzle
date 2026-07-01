@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Puzzle — DM</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dm-body">
+  <h1>🎲 DM Control Panel</h1>
+
+  <section id="dashboard-section">
+    <div class="panel">
+      <h2>Current Round <span class="status-pill" id="status-pill">idle</span></h2>
+
+      <div class="toggle-row form-row">
+        <input type="checkbox" id="randomize-toggle">
+        <label for="randomize-toggle" style="margin:0;">Randomize phrase from active list</label>
+      </div>
+
+      <div class="form-row">
+        <label for="list-select">Active phrase list</label>
+        <select id="list-select"></select>
+      </div>
+
+      <div id="manual-phrase-row" class="form-row">
+        <label for="manual-phrase">Custom phrase</label>
+        <input type="text" id="manual-phrase" placeholder="e.g. The early bird catches the worm">
+        <button id="send-phrase-btn" style="margin-top:0.6em;">Send to Player</button>
+      </div>
+
+      <div id="random-phrase-row" class="form-row hidden">
+        <button id="next-phrase-btn">🎲 Next Random Phrase</button>
+        <button id="reset-used-btn" style="background:transparent; border:1px solid var(--panel-border); color:var(--muted);">Reset "used" flags for this list</button>
+      </div>
+
+      <div class="form-row">
+        <label>Phrase currently sent to player</label>
+        <div class="live-emoji" id="current-phrase-display">—</div>
+      </div>
+
+      <div class="form-row">
+        <label>Player's live emoji submission</label>
+        <div class="live-emoji" id="live-submission">—</div>
+      </div>
+
+      <div class="round-controls">
+        <button class="correct-btn" id="mark-correct-btn">✅ Mark Correct</button>
+        <button id="next-round-btn">↻ Next Round</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Phrase Lists</h2>
+      <div class="form-row">
+        <label for="new-list-name">Create a new list</label>
+        <input type="text" id="new-list-name" placeholder="e.g. Movie Quotes">
+        <button id="create-list-btn" style="margin-top:0.6em;">Create List</button>
+      </div>
+
+      <div class="form-row">
+        <label for="bulk-phrases">Add phrases to the list selected above (one per line)</label>
+        <textarea id="bulk-phrases" rows="4" placeholder="A stitch in time saves nine&#10;Curiosity killed the cat"></textarea>
+        <button id="add-phrases-btn" style="margin-top:0.6em;">Add Phrases</button>
+      </div>
+
+      <div class="form-row">
+        <label>Phrases in selected list</label>
+        <div id="phrases-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="js/dm.js"></script>
+</body>
+</html>

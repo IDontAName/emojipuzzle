@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emoji Puzzle — Player</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="player-body">
+  <div class="phrase-banner" id="phrase-text">Waiting for the DM to send a phrase…</div>
+  <div class="status-line" id="status-text"></div>
+
+  <form class="emoji-form" id="emoji-form">
+    <input type="text" id="emoji-input" placeholder="🧩😀🎲" autocomplete="off" disabled>
+    <button type="submit">Send</button>
+  </form>
+  <div class="hint-text">Emoji only — anything else is removed automatically.</div>
+
+  <script type="module" src="js/player.js"></script>
+</body>
+</html>
